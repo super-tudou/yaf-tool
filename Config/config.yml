@@ -1,0 +1,12 @@
+debug: true
+#数据库
+database:
+    default:
+      driver: mysql
+      host: 10.10.200.54
+      database: vhall
+      username: alldb
+      password: alldb
+      charset: utf8mb4
+      collation: utf8mb4_unicode_ci
+

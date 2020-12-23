@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
+use Generate\Services\CommandService;
+
+// 总项目根目录
+define("BASE_PATH", __DIR__);
+// application
+define("APP_PATH", dirname(BASE_PATH) . '/app/');
+require_once BASE_PATH . '/vendor/autoload.php';
+Generate\App\Application::getInstance()->run();
+$application = new Application();
+$commandLoader = new FactoryCommandLoader(CommandService::getCommandList());
+$application->setCommandLoader($commandLoader);
+$application->run();

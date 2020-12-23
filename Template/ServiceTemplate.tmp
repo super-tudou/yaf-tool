@@ -1,0 +1,112 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * @file   #serviceName#.php
+ * @author 李锦 <jin.li@vhall.com>
+ * @date   #date#
+ * @desc   #desc#数据操作控制器
+ */
+
+namespace web\modules\V3Users\services;
+
+use core\common\JsonException;
+use web\models\#modelName#;
+use web\common\WebBaseService;
+use web\common\errors\ApiErrorTrait;
+use web\common\configs\ErrorConfig;
+
+/**
+ * Class #serviceName#
+ * @package web\modules\V3Users\services
+ */
+class #serviceName# extends WebBaseService
+{
+    /**
+     * @var #modelName#
+     */
+    protected $model;
+
+    /**
+     * @return mixed
+     */
+    protected function __init()
+    {
+        $this->model = #modelName#::getInstance();
+    }
+
+    /**
+     * 获取数据详情
+     * @param $params
+     * @return mixed
+     */
+    public function get#table#Info($params)
+    {
+        return $this->model->get#table#Info([#infoWhere#]);
+    }
+
+    /**
+     * 获取数据列表
+     * @param $params
+     * @return array
+     */
+    public function get#table#List($params)
+    {
+#paramsFilter#
+        list($totalCount, $dataList) = $this->model->get#table#List([#listWhere#], $params['pos'], $params['limit']);
+        return [
+            'list' => $dataList->toArray(),
+            'total'=>$totalCount
+        ];
+    }
+
+    /**
+     * 创建数据
+     * @param array $params
+     * @return int
+     * @throws JsonException
+     */
+    public function create#table#($params = [])
+    {
+    #uniqueCheck#
+        //创建数据
+        $result = $this->model->create($params);
+        return intval($result && $result->id);
+    }
+
+    /**
+     * 编辑数据
+     * @param $params
+     * @return bool
+     * @throws JsonException
+     */
+    public function edit#table#($params)
+    {
+        $model = $this->model->find($params['id']);
+        //数据检查
+        $this->conditionCheck(!$model, ErrorConfig::ER_DATA_EMPTY);
+        //数据更新检查
+        $this->dataRepeatCheck($model, $params);
+        //更新数据
+        $result = $model->update($params);
+        return intval($result);
+    }
+
+    /**
+     * 删除数据
+     * @param $params
+     * @return int
+     * @throws JsonException
+     * @throws \Exception
+     */
+    public function delete#table#($params)
+    {
+       $model = $this->model->find($params['id']);
+       //数据判断
+       $this->conditionCheck(!$model, ErrorConfig::ER_DATA_EMPTY);
+       //删除数据
+       $result = $model->delete();
+       return intval($result);
+    }
+
+}
+

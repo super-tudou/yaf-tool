@@ -1,0 +1,25 @@
+{
+  "name": "lijin/generate",
+  "authors": [
+    {
+      "name": "李锦",
+      "email": "jin.li@vhall.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "6.3.3",
+    "symfony/console": "^5.1",
+    "symfony/yaml": "^5.1",
+    "symfony/filesystem": "^5.1",
+    "illuminate/database": "^8.13",
+
+
+    "illuminate/events": "^8.13",
+    "friendsofphp/php-cs-fixer": "^2.16"
+  },
+  "autoload": {
+    "psr-4": {
+      "Generate\\": "../Generate/"
+    }
+  }
+}

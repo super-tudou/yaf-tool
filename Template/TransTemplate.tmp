@@ -1,0 +1,45 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * @file   #model#.php
+ * @author 李锦 <jin.li@vhall.com>
+ * @date   #date#
+ * @desc   #desc#模型
+ */
+
+namespace web\modules\V3Users\translations;
+
+use web\common\configs\CommonConfig;
+use web\common\translations\TranslationBase;
+use web\modules\V3Users\configs\SubjectConfig;
+use web\modules\V3Users\response\SubjectResponse;
+use web\modules\V3Users\response\#response#;
+
+class #trans# extends TranslationBase
+{
+
+    /**
+     * 字段格式化配置
+     * @var array
+     * alias => 别名
+     * default => 默认值，为空的时候设置默认值
+     * function => 处理函数
+     */
+    public $fieldsFormatRule = [
+#fields#
+    ];
+
+    /**
+     * 列表参数过滤
+     * @param $data
+     * @return mixed
+     */
+    public function listParamTrans($data)
+    {
+        !isset($data['pos']) && $data['pos'] = CommonConfig::DEFAULT_POS;
+        !isset($data['limit']) && $data['limit'] = CommonConfig::DEFAULT_LIMIT;
+        /*!isset($data['private_status']) && $data['private_status'] = SubjectConfig::PRIVATE_STATUS_ALL;
+        !isset($data['type']) && $data['type'] = SubjectConfig::SUBJECT_TYPE_WEBINAR;*/
+        return $data;
+    }
+}

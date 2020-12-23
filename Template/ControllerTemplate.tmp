@@ -1,0 +1,115 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * @file   #controllerName#.php
+ * @author 李锦 <jin.li@vhall.com>
+ * @date   #date#
+ * @desc   #desc#数据操作控制器
+ */
+
+use web\common\WebBaseController;
+use web\common\validates\ValidateBase;
+
+use web\modules\V3Users\rules\#ruleName#;
+use web\modules\V3Users\translations\#transName#;
+use web\modules\V3Users\services\#serviceName#;
+use web\modules\V3Users\responses\#responseName#;
+use web\modules\V3Users\responses\CommonResponse;
+
+/**
+ * #desc#数据操作控制器
+ * Class RoleController
+ */
+class #controller# extends WebBaseController
+{
+
+/**
+     * 新增#desc#列表
+     * @throws \core\common\JsonException
+     */
+    public function createAction()
+    {
+        $params = self::getParam();
+        //参数校验
+        ValidateBase::getInstance()->validateError($params, #ruleName#::$createRules);
+        //获取数据
+        $params = [
+#createFields#
+        ];
+        $result = #serviceName#::getInstance()->create#table#($params);
+        $this->returnSuccess(['result' => $result],CommonResponse::SUCCESS_INFO_RESULT_RULE);
+    }
+
+    /**
+     * 编辑#desc#
+     * @throws \core\common\JsonException
+     */
+    public function editAction()
+    {
+        $params = self::getParam();
+        //参数校验
+        ValidateBase::getInstance()->validateError($params, #ruleName#::$editRules);
+        //获取数据
+        $update = [
+#editFields#
+        ];
+#updateField#
+
+        $result = #serviceName#::getInstance()->edit#table#($update);
+        $this->returnSuccess(['result' => intval($result)],CommonResponse::SUCCESS_INFO_RESULT_RULE);
+    }
+
+     /**
+     * 删除#desc#
+     * @throws \core\common\JsonException
+     */
+    public function deleteAction()
+    {
+        $params = self::getParam();
+        //参数校验
+        ValidateBase::getInstance()->validateError($params, #table#Rule::$deleteRules);
+        //获取数据
+        $params = [
+#deleteFields#
+        ];
+        $result = #serviceName#::getInstance()->delete#table#($params);
+        $this->returnSuccess(['result' => intval($result)],CommonResponse::SUCCESS_INFO_RESULT_RULE);
+    }
+
+    /**
+     * @throws \core\common\JsonException
+     */
+    public function infoAction()
+    {
+        $params = self::getParam();
+        //参数校验
+        ValidateBase::getInstance()->validateError($params, #ruleName#::$infoRules);
+        //获取数据
+        $params = [
+#infoParamsFilter#
+        ];
+        $response = #serviceName#::getInstance()->get#table#Info($params);
+        return $this->returnSuccess($response, #table#Response::#listKey#_INFO_RESULT_RULE);
+    }
+
+    /**
+     * 获取#desc#列表
+     * @throws \core\common\JsonException
+     */
+    public function listAction()
+    {
+        $params = self::getParam();
+        //参数校验
+        ValidateBase::getInstance()->validateError($params, #ruleName#::$listRules);
+        //参数过滤
+        $params = #transName#::getInstance()->listParamTrans($params);
+        //获取数据
+        $params = [
+            'limit' => $params['limit'],
+            'pos' => $params['pos'],
+#listParamsFilter#
+        ];
+        $response = #serviceName#::getInstance()->get#table#List($params);
+        return $this->returnSuccess($response, #responseName#::#listKey#_LIST_RESULT_RULE);
+    }
+}

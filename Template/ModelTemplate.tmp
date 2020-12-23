@@ -1,0 +1,112 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * @file   #model#.php
+ * @author 李锦 <jin.li@vhall.com>
+ * @date   #date#
+ * @desc   #desc#模型
+ */
+
+namespace web\models;
+
+use Illuminate\Database\Eloquent\SoftDeletes;
+use web\modules\V3Users\facade\Cache;
+use web\common\WebBaseModel;
+use web\modules\V3Users\events\Events\ModelEvent;
+use core\traits\RedisTrait;
+use web\modules\V3Users\configs\#configName#;
+use web\modules\V3Users\configs\CacheConfig;
+
+
+/**
+ * Class #model#
+ * @package web\models
+#fields#
+ */
+class #model# extends WebBaseModel
+{
+    use SoftDeletes,ModelEvent;
+
+    /**
+     * 表唯一索引
+     * @var \string[][]
+     */
+    protected $index =#index#;
+
+    /**
+     * The connection name for the model.
+     *
+     * @var string
+     */
+    protected $connection = 'default';
+
+    /**
+     * 关联表
+     * @var string
+     */
+    protected $table = '#true_table#';
+
+    /**
+     * 主键
+     * @var string
+     */
+    protected $primaryKey = 'id';
+
+    /**
+     * init model
+     */
+     protected function __init()
+     {
+        self::$infoCacheKey = #configName#::TABLE_INFO_CACHE_#cachePrefix#;
+     }
+
+    /**
+     * @param $where
+     * @param array $fields
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|#table#Model|null
+     */
+    public function get#table#Info($where, $fields = [])
+    {
+        if (isset($where['id'])) {
+             return $this->getInfoById($where['id'],$fields);
+        }
+        $query = self::where($where);
+        $fields && $query->select($fields);
+        return $query->first();
+    }
+
+    /**
+     * @param $where
+     * @param int $offset
+     * @param array $fields
+     * @param int $limit
+     * @return array
+     */
+    public function get#table#List($where, $offset = 0, $limit = #configName#::DEFAULT_LIMIT, $fields = [])
+    {
+        $query = self::where($where);
+        $count = $query->count();
+        $query->offset($offset)->limit($limit);
+        $fields && $query->select($fields);
+        $list = $query->orderBy("created_at", 'desc')->get();
+        return [$count, $list];
+    }
+
+    /**
+     * @param $id
+     * @param array $fields
+     * @return mixed
+     */
+    public function getInfoById($id,$fields=[])
+    {
+        $cacheKey = $this->getInfoCacheKey($id);
+        return Cache::remember($cacheKey, CacheConfig::getCacheExpire(), function () use ($id, $fields) {
+            $query = self::where('id', $id);
+            $fields && $query->select($fields);
+            return $query->first();
+        });
+    }
+}
+
+
+

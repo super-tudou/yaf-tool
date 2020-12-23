@@ -1,0 +1,79 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * @file   #ruleName#.php
+ * @author 李锦 <jin.li@vhall.com>
+ * @date   #date#
+ * @desc   #desc#数据返回定义
+ */
+
+namespace web\modules\V3Users\rules;
+
+use web\modules\V3Users\configs\#config#;
+
+/**
+ * #desc#数据返回定义
+ * Class RolesRule
+ * @package web\modules\V3Users\rules
+ */
+class #ruleName#
+{
+    /**
+     * 表字段定义
+     */
+    const FIELD_RULE = [
+        'limit' => 'integer|min:1|max:' . #config#::LIMIT_MAX,
+#field_rule#
+
+    ];
+
+    /**
+     * 列表查询参数过滤
+     * @var \string[][]
+     */
+    public static $listRules = [
+        'rule' => [
+#list_rule#
+        ],
+    ];
+
+    /**
+     * 数据添加参数过滤
+     * @var \string[][]
+     */
+    public static $createRules = [
+        'rule' => [
+#create_rule#
+        ],
+    ];
+
+    /**
+     * 数据编辑参数过滤
+     * @var \string[][]
+     */
+    public static $editRules = [
+        'rule' => [
+#edit_rule#
+        ],
+    ];
+    /**
+     * 数据删除参数过滤
+     * @var \string[][]
+     */
+    public static $deleteRules = [
+        'rule' => [
+#delete_rule#
+        ],
+    ];
+
+    /**
+     * 详情查询参数过滤
+     * @var \string[][]
+     */
+    public static $infoRules = [
+        'rule' => [
+#info_rule#
+        ],
+    ];
+
+}

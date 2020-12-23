@@ -1,0 +1,52 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * @file   #response#.php
+ * @author 李锦 <jin.li@vhall.com>
+ * @date   #date#
+ * @desc   #desc#数据返回定义
+ */
+
+namespace web\modules\V3Users\responses;
+
+
+/**
+ * #desc#数据返回定义
+ * Class RolesTrans
+ * @package web\modules\V3Users\response
+ *
+ *
+ * 字段格式化配置
+ * @var array
+ * _root_type => 根结果集数据类型定义
+ * alias => 别名
+ * type     => 字段类型（ 可选值：strval：字符串，intval：整型，flotval:浮点型，object：对象{}，array：数组[] ）
+ * is_must  => 是否必须（返回结果中此字段是否必须，1：必须，0：非必须）
+ * default  => 默认值，为空的时候设置默认值
+ * function => 处理函数（可选函数：json_decode，mb_substr）
+ * _fields  => 多维数组结果嵌套
+ */
+class #response#
+{
+    /**
+     * info rule
+     */
+    const #table#_INFO_RESULT_RULE = [
+        '_root_type'    => [ 'type' => 'object'],
+
+#dataResponse#
+    ];
+
+    /**
+     * list rule
+     */
+    const #table#_LIST_RESULT_RULE = [
+        '_root_type'    => [ 'type' => 'object'],
+        'total' => ['type' => 'intval', 'is_must' => 1],
+        'list'          => [ 'type' => 'array', 'is_must' => 1, '_fields' => [
+#dataResponse#
+            ]
+        ],
+
+    ];
+}

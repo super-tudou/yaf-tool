@@ -1,0 +1,38 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * @file   #response#.php
+ * @author 李锦 <jin.li@vhall.com>
+ * @date   #date#
+ * @desc   #desc#数据返回定义
+ */
+
+
+namespace web\modules\V3Users\configs;
+
+use web\common\configs\CommonConfig;
+use web\modules\V3Users\configs\CacheConfig;
+
+/**
+ * #desc#数据配置
+ * Class RolesTrans
+ * @package web\modules\V3Users\response
+ */
+class #config# extends CommonConfig
+{
+    /**
+#fields#
+     */
+
+    /********************缓存key定义**********************/
+    const TABLE_INFO_CACHE_#cachePrefix#        = 'table:info:cache:#table#:%s';
+
+
+    /********************字段值定义**********************/
+    const SUBJECT_TYPE_WEBINAR      = 1;    //专题类型：直播专题 TODO
+
+
+    /********************程序定义**********************/
+    const LIMIT_MAX                 = 50;  //每页查询最大条数
+
+}
